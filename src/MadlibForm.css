@@ -6,6 +6,15 @@
 	padding: 5px;
 }
 
+.MadlibForm select {
+	display: block;
+	margin: 15px auto 25px;
+	text-align: center;
+	width: 30vw;
+	outline: none;
+	padding: 5px;
+}
+
 .MadlibForm button:disabled {
 	background-color: lightgray;
 	color: gray;

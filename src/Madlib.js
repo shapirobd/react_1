@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MadlibForm from "./MadlibForm";
 import MadlibStory from "./MadlibStory";
 import useToggle from "./hooks/useToggle";
+import $ from "jquery";
 import "./Madlib.css";
 
 const Madlib = () => {
@@ -11,20 +12,19 @@ const Madlib = () => {
 		"The [noun] jumped over the [adjective] [noun2].",
 	];
 
-	// represents initial state of text inputs from the madlib form
-	const INITIAL_FORM_STATE = {
+	let INITIAL_FORM_STATE = {
 		noun: "",
 		noun2: "",
 		adjective: "",
 		color: "",
 	};
-
 	const INITIAL_STORY_STATE = stories[0];
 	const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 	const [storyText, setStoryText] = useState(INITIAL_STORY_STATE);
 	const [isFormVisible, toggleIsFormVisible] = useToggle(true);
 	const [isStoryVisible, toggleIsStoryVisible] = useToggle(false);
-
+	const [chosenStory, setChosenStory] = useState(stories[0]);
+	const [storyIdx, setStoryIdx] = useState(0);
 	// updates formData (this is triggered whenver a text input is updated using the onChange property on the input)
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -62,6 +62,8 @@ const Madlib = () => {
 	const handleReset = (e) => {
 		handleSubmit(e);
 		setStoryText(INITIAL_STORY_STATE);
+		setChosenStory(stories[0]);
+		setStoryIdx(0);
 	};
 
 	return (
@@ -72,6 +74,13 @@ const Madlib = () => {
 				handleSubmit={handleSubmit}
 				formData={formData}
 				isVisible={isFormVisible}
+				stories={stories}
+				setFormData={setFormData}
+				setStoryText={setStoryText}
+				chosenStory={chosenStory}
+				setChosenStory={setChosenStory}
+				storyIdx={storyIdx}
+				setStoryIdx={setStoryIdx}
 			/>
 			<MadlibStory
 				handleReset={handleReset}

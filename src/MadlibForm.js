@@ -1,8 +1,22 @@
 import React, { useEffect } from "react";
+import MadlibStoryPicker from "./MadlibStoryPicker";
 import useToggle from "./hooks/useToggle";
+import uuid from "uuid";
 import "./MadlibForm.css";
 
-const MadlibForm = ({ handleChange, handleSubmit, formData, isVisible }) => {
+const MadlibForm = ({
+	handleChange,
+	handleSubmit,
+	formData,
+	isVisible,
+	stories,
+	setFormData,
+	setStoryText,
+	chosenStory,
+	setChosenStory,
+	storyIdx,
+	setStoryIdx,
+}) => {
 	const [submitBtnEnabled, toggleSubmitBtnEnabled] = useToggle(false);
 
 	// whenever formData is updated, check to see if all form values are filled. if not, keep/make submit button disabled - if so, keep/make submit button enabled
@@ -18,7 +32,7 @@ const MadlibForm = ({ handleChange, handleSubmit, formData, isVisible }) => {
 		if (!submitBtnEnabled) {
 			toggleSubmitBtnEnabled();
 		}
-	}, [formData]);
+	}, [formData, submitBtnEnabled, toggleSubmitBtnEnabled]);
 
 	return (
 		<form
@@ -26,38 +40,28 @@ const MadlibForm = ({ handleChange, handleSubmit, formData, isVisible }) => {
 			onSubmit={handleSubmit}
 			style={isVisible ? { display: "block" } : { display: "none" }}
 		>
-			<input
-				id="noun"
-				name="noun"
-				type="text"
-				placeholder="noun"
-				onChange={handleChange}
-				value={formData.noun}
-			></input>
-			<input
-				id="noun2"
-				name="noun2"
-				type="text"
-				placeholder="noun2"
-				onChange={handleChange}
-				value={formData.noun2}
-			></input>
-			<input
-				id="adjective"
-				name="adjective"
-				type="text"
-				placeholder="adjective"
-				onChange={handleChange}
-				value={formData.adjective}
-			></input>
-			<input
-				id="color"
-				name="color"
-				type="text"
-				placeholder="color"
-				onChange={handleChange}
-				value={formData.color}
-			></input>
+			<MadlibStoryPicker
+				stories={stories}
+				setFormData={setFormData}
+				setStoryText={setStoryText}
+				chosenStory={chosenStory}
+				setChosenStory={setChosenStory}
+				storyIdx={storyIdx}
+				setStoryIdx={setStoryIdx}
+			/>
+			{Object.entries(formData).map(([key, value]) => {
+				return (
+					<input
+						id={key}
+						name={key}
+						type="text"
+						placeholder={key}
+						onChange={handleChange}
+						value={value}
+						key={uuid()}
+					></input>
+				);
+			})}
 			{submitBtnEnabled && <button type="submit">Get Story</button>}
 			{!submitBtnEnabled && (
 				<button type="submit" disabled>
