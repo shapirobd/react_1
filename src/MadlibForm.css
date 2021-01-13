@@ -1,0 +1,7 @@
+.MadlibForm input {
+	display: block;
+	margin: 15px auto;
+	width: 30vw;
+	outline: none;
+	padding: 5px;
+}
