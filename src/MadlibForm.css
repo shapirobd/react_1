@@ -5,3 +5,8 @@
 	outline: none;
 	padding: 5px;
 }
+
+.MadlibForm button:disabled {
+	background-color: lightgray;
+	color: gray;
+}
