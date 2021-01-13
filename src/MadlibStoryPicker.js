@@ -2,6 +2,7 @@ import React from "react";
 import $ from "jquery";
 import uuid from "uuid";
 
+// component that renders a select menu to chose the desired madlib story - the story that is chosen will affect the input fields displayed in MadlibForm
 const MadlibStoryPicker = ({
 	stories,
 	setFormData,

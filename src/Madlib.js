@@ -5,6 +5,7 @@ import useToggle from "./hooks/useToggle";
 import $ from "jquery";
 import "./Madlib.css";
 
+// top parent component (aside from App) that renders all other components and controls most of the state & effects for the application
 const Madlib = () => {
 	// possible madlib stories for a user to choose from
 	const stories = [

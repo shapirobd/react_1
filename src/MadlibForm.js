@@ -4,6 +4,7 @@ import useToggle from "./hooks/useToggle";
 import uuid from "uuid";
 import "./MadlibForm.css";
 
+// component that renders a form for selecting a madlib story, filling in your chosen words to fill the story with, and submitting the form to display the final story
 const MadlibForm = ({
 	handleChange,
 	handleSubmit,
