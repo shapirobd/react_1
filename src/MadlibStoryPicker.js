@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import $ from "jquery";
 import uuid from "uuid";
 
@@ -11,45 +11,12 @@ const MadlibStoryPicker = ({
 	storyIdx,
 	setStoryIdx,
 }) => {
-	// represents initial state of text inputs from the madlib form
-	const MAX_FORM_VALUES = {
-		noun: "",
-		noun2: "",
-		noun3: "",
-		adjective: "",
-		adjective2: "",
-		adjective3: "",
-		verb: "",
-		verb2: "",
-		verb3: "",
-		adverb: "",
-		adverb2: "",
-		adverb3: "",
-		color: "",
-		color2: "",
-		color3: "",
-	};
+	// whenever a different button is selected from the select element, updated storyIdx to match the selected story
 	const handleStorySwitch = (e) => {
 		if ($("#stories-select").val()) {
 			setStoryIdx((storyIdx) => $("#stories-select").val());
 		}
 	};
-
-	useEffect(() => {
-		setChosenStory((chosenStory) => stories[storyIdx]);
-	}, [storyIdx]);
-
-	useEffect(() => {
-		console.log(chosenStory);
-		const initialFormData = {};
-		for (let partOfSpeech in MAX_FORM_VALUES) {
-			if (chosenStory.includes(`${partOfSpeech}`)) {
-				initialFormData[partOfSpeech] = "";
-			}
-		}
-		setFormData((formData) => initialFormData);
-		setStoryText((storyText) => chosenStory);
-	}, [chosenStory]);
 
 	return (
 		<div className="StoryPicker">

@@ -12,19 +12,60 @@ const Madlib = () => {
 		"The [noun] jumped over the [adjective] [noun2].",
 	];
 
+	// the largest possible madlib form data object
+	const MAX_FORM_VALUES = {
+		noun: "",
+		noun2: "",
+		noun3: "",
+		adjective: "",
+		adjective2: "",
+		adjective3: "",
+		verb: "",
+		verb2: "",
+		verb3: "",
+		adverb: "",
+		adverb2: "",
+		adverb3: "",
+		color: "",
+		color2: "",
+		color3: "",
+	};
+
+	// the state of formData upon initial render
 	let INITIAL_FORM_STATE = {
 		noun: "",
 		noun2: "",
 		adjective: "",
 		color: "",
 	};
+
+	// the state of storyText upon initial render
 	const INITIAL_STORY_STATE = stories[0];
+
 	const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 	const [storyText, setStoryText] = useState(INITIAL_STORY_STATE);
 	const [isFormVisible, toggleIsFormVisible] = useToggle(true);
 	const [isStoryVisible, toggleIsStoryVisible] = useToggle(false);
 	const [chosenStory, setChosenStory] = useState(stories[0]);
 	const [storyIdx, setStoryIdx] = useState(0);
+
+	// whenever storyIdx is updated, update chosenStory to match the story selected from the select menu
+	useEffect(() => {
+		setChosenStory((chosenStory) => stories[storyIdx]);
+	}, [storyIdx]);
+
+	// whenever chosenStory is updated, set formData to match fields required for the selected story and update storyText to match the text from the selected story
+	useEffect(() => {
+		const initialFormData = {};
+		for (let partOfSpeech in MAX_FORM_VALUES) {
+			if (chosenStory.includes(`${partOfSpeech}`)) {
+				initialFormData[partOfSpeech] = "";
+			}
+		}
+		setFormData((formData) => initialFormData);
+		setStoryText((storyText) => chosenStory);
+	}, [chosenStory]);
+
 	// updates formData (this is triggered whenver a text input is updated using the onChange property on the input)
 	const handleChange = (e) => {
 		const { name, value } = e.target;
